@@ -515,6 +515,64 @@
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--green-dark); }
 
+  /* ── Video project cards ── */
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+    gap: 24px; margin-bottom: 24px;
+  }
+  .video-card {
+    background: var(--card); border: 1px solid var(--border);
+    overflow: hidden; position: relative;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+  .video-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at top right, var(--green-glow), transparent 60%);
+    opacity: 0; transition: opacity 0.4s; pointer-events: none; z-index: 0;
+  }
+  .video-card:hover::before { opacity: 1; }
+  .video-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-bright);
+    box-shadow: 0 16px 48px rgba(0,255,106,0.1);
+  }
+  .video-wrapper {
+    position: relative; width: 100%; padding-bottom: 56.25%;
+    background: #000; overflow: hidden;
+  }
+  .video-wrapper iframe {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%; border: none;
+  }
+  .video-badge {
+    position: absolute; top: 12px; left: 12px; z-index: 2;
+    font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase;
+    background: var(--green); color: var(--bg); padding: 4px 10px; font-weight: 500;
+  }
+  .video-body { padding: 28px 28px 24px; position: relative; z-index: 1; }
+  .video-num {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 2.2rem; color: var(--border-bright);
+    line-height: 1; margin-bottom: 10px; transition: color 0.3s;
+  }
+  .video-card:hover .video-num { color: var(--green); }
+  .video-title {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 1rem; color: var(--text); margin-bottom: 10px;
+  }
+  .video-desc {
+    font-size: 0.76rem; line-height: 1.78;
+    color: var(--text-dim); margin-bottom: 14px;
+  }
+  .video-impact {
+    font-size: 0.67rem; color: var(--green);
+    letter-spacing: 0.08em; padding: 5px 12px;
+    border: 1px solid var(--border-bright);
+    display: inline-block; margin-bottom: 14px;
+  }
+  .video-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+
   /* Responsive */
   @media (max-width: 768px) {
     nav { padding: 16px 24px; }
@@ -691,26 +749,109 @@
 <section class="projects-section" id="projects">
   <div class="section-tag">Portfolio</div>
   <h2 class="section-title reveal">Selected <em>Projects</em></h2>
-  <div class="projects-grid">
-    <div class="project-card reveal reveal-d1">
-      <div class="project-num">01</div>
-      <div class="project-title">Intelligent Data Ops Pipeline</div>
-      <div class="project-desc">Fully automated hourly ETL pipeline pulling raw Stripe transaction data from Google Sheets, cleaning and normalising it, then loading into Supabase. A Groq-powered LLM (Llama 3.3 70B) analyses each batch for anomalies — spikes, drops, fraud patterns — returning a structured JSON verdict. Flagged anomalies are logged to an incident table and fire real-time Slack alerts. All node errors are captured centrally with timestamps, node names, and severity levels — nothing fails silently.</div>
-      <div class="project-impact">⚡ AI-Powered Anomaly Detection</div>
-      <div class="project-stack">
-        <span class="stack-tag">n8n</span>
-        <span class="stack-tag">Supabase</span>
-        <span class="stack-tag">Groq LLM</span>
-        <span class="stack-tag">Llama 3.3 70B</span>
-        <span class="stack-tag">Google Sheets</span>
-        <span class="stack-tag">Slack</span>
-        <span class="stack-tag">ETL</span>
+
+  <!-- ── VIDEO DEMOS ── -->
+  <div class="section-tag reveal" style="margin-bottom:20px;">▶ Live Demos</div>
+  <div class="video-grid">
+
+    <!-- Video 1: Tax-ID Verification -->
+    <div class="video-card reveal reveal-d1">
+      <div class="video-wrapper">
+        <div class="video-badge">▶ Live Demo</div>
+        <iframe src="https://www.youtube.com/embed/4A-jqox14R8" title="Tax-ID Verification Automation" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="video-body">
+        <div class="video-num">01</div>
+        <div class="video-title">AI-Powered Tax-ID Verification & Compliance</div>
+        <div class="video-desc">Manual vendor Tax ID verification is a bottleneck — slow, expensive, and error-prone at scale. This system eliminates it entirely. A vendor submits their Tax ID via a branded web form; n8n instantly routes it to a Groq-powered LLM (LLaMA 3.3 70B) which parses the document, checks format validity, cross-references compliance rules, and returns a structured JSON verdict in under 2 seconds. Clean submissions are auto-approved and logged to a live Google Sheets compliance database. Failed or flagged submissions trigger a human-review alert. Duplicate submissions are caught before they reach the AI — preventing double-billing entirely. For businesses processing 50–500 vendor onboardings per month, this pays for itself within the first week of deployment.</div>
+        <div class="video-impact">⚡ 15–30 min → Under 2 Seconds Per Verification</div>
+        <div class="video-stack">
+          <span class="stack-tag">n8n</span>
+          <span class="stack-tag">Groq LLM</span>
+          <span class="stack-tag">LLaMA 3.3 70B</span>
+          <span class="stack-tag">Lovable</span>
+          <span class="stack-tag">Google Sheets</span>
+          <span class="stack-tag">Gmail</span>
+        </div>
       </div>
     </div>
-    <div class="project-card reveal reveal-d2">
-      <div class="project-num">02</div>
+
+    <!-- Video 2: Client Onboarding -->
+    <div class="video-card reveal reveal-d2">
+      <div class="video-wrapper">
+        <div class="video-badge">▶ Live Demo</div>
+        <iframe src="https://www.youtube.com/embed/NEtp-CAuUpM" title="Client Onboarding Automation" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="video-body">
+        <div class="video-num">02</div>
+        <div class="video-title">Zero-Touch Client Onboarding Engine</div>
+        <div class="video-desc">Built for SoClear Consult — this system reduced onboarding runtime from 60–120 minutes of manual admin down to under 30 seconds, with zero human input. One form submission simultaneously fires a branded personalised welcome email, auto-creates a Google Calendar invite 3 days out (agenda included), announces the client in Slack with a full context card, logs them as a structured row in the Google Sheets client tracker, and schedules a 30-day satisfaction survey. If any node fails, a real-time Slack alert fires instantly with the exact error and affected client. The system operates at O(1) complexity — whether you onboard 1 or 100 clients this month, the overhead is identical. Admin costs cut by 50%. 100% follow-up completion rate. Marginal cost per new client: ₦0.</div>
+        <div class="video-impact">↓ 90% Admin Time · 50% Cost Reduction</div>
+        <div class="video-stack">
+          <span class="stack-tag">n8n</span>
+          <span class="stack-tag">Lovable</span>
+          <span class="stack-tag">Gmail</span>
+          <span class="stack-tag">Google Calendar</span>
+          <span class="stack-tag">Google Sheets</span>
+          <span class="stack-tag">Slack</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video 3: ETL & Anomaly Detection -->
+    <div class="video-card reveal reveal-d3">
+      <div class="video-wrapper">
+        <div class="video-badge">▶ Live Demo</div>
+        <iframe src="https://www.youtube.com/embed/lFbq-YHF1ko" title="ETL & Anomaly Detection Automation" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="video-body">
+        <div class="video-num">03</div>
+        <div class="video-title">Intelligent Data Ops Pipeline (ETL + AI Monitoring)</div>
+        <div class="video-desc">Fully automated hourly ETL pipeline pulling raw Stripe transaction data from Google Sheets, cleaning and normalising it, then loading into Supabase. A Groq-powered LLM (Llama 3.3 70B) analyses each batch for anomalies — spikes, drops, fraud patterns — returning a structured JSON verdict. Flagged anomalies are logged to an incident table and fire real-time Slack alerts. All node errors are captured centrally with timestamps, node names, and severity levels — nothing fails silently.</div>
+        <div class="video-impact">⚡ AI-Powered Anomaly Detection · Zero Silent Failures</div>
+        <div class="video-stack">
+          <span class="stack-tag">n8n</span>
+          <span class="stack-tag">Supabase</span>
+          <span class="stack-tag">Groq LLM</span>
+          <span class="stack-tag">Llama 3.3 70B</span>
+          <span class="stack-tag">Google Sheets</span>
+          <span class="stack-tag">Slack</span>
+          <span class="stack-tag">ETL</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video 4: SwiftPay -->
+    <div class="video-card reveal reveal-d4">
+      <div class="video-wrapper">
+        <div class="video-badge">▶ Live Demo</div>
+        <iframe src="https://www.youtube.com/embed/OC3YjOBTrbU" title="SwiftPay Payment Automation" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="video-body">
+        <div class="video-num">04</div>
+        <div class="video-title">SwiftPay Checkout Automation</div>
+        <div class="video-desc">Automation layer behind a payment checkout demo, handling real-time webhook events from a payment gateway and orchestrating conditional flows based on payment status — success, failure, or pending — each triggering email confirmations, database updates, and fraud flag alerts. Solved out-of-order webhook delivery and idempotency using Set + IF deduplication logic with a fallback error branch logging failed events for manual review — giving full resilience and auditability.</div>
+        <div class="video-impact">✓ Idempotent · Zero Double-Entries · Full Auditability</div>
+        <div class="video-stack">
+          <span class="stack-tag">n8n</span>
+          <span class="stack-tag">Webhooks</span>
+          <span class="stack-tag">Payment Gateway</span>
+          <span class="stack-tag">Deduplication Logic</span>
+          <span class="stack-tag">Email Automation</span>
+          <span class="stack-tag">Fraud Alerts</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── ADDITIONAL PROJECTS ── -->
+  <div class="section-tag reveal" style="margin-bottom:20px; margin-top: 16px;">More Projects</div>
+  <div class="projects-grid">
+    <div class="project-card reveal reveal-d1">
+      <div class="project-num">05</div>
       <div class="project-title">WhatsApp Vendor Automation</div>
-      <div class="project-desc">End-to-end conversational automation for WhatsApp-based vendors handling high message volumes. The workflow auto-responds to common requests — products, pricing, availability — by pulling live inventory data. Intelligently routes escalations and non-standard queries to a human agent. Result: 60–70% of repetitive conversations handled automatically, delivering faster and more consistent responses even during peak hours. Built with resilience and failure handling in mind.</div>
+      <div class="project-desc">End-to-end conversational automation for WhatsApp-based vendors handling high message volumes. The workflow auto-responds to common requests — products, pricing, availability — by pulling live inventory data. Intelligently routes escalations and non-standard queries to a human agent. Result: 60–70% of repetitive conversations handled automatically, delivering faster and more consistent responses even during peak hours.</div>
       <div class="project-impact">↓ 60–70% Repetitive Queries Automated</div>
       <div class="project-stack">
         <span class="stack-tag">n8n</span>
@@ -720,24 +861,10 @@
         <span class="stack-tag">Human Handoff Logic</span>
       </div>
     </div>
-    <div class="project-card reveal reveal-d3">
-      <div class="project-num">03</div>
-      <div class="project-title">SwiftPay Checkout Automation</div>
-      <div class="project-desc">Automation layer behind a payment checkout demo, handling real-time webhook events from a payment gateway and orchestrating conditional flows based on payment status — success, failure, or pending — each triggering email confirmations, database updates, and fraud flag alerts. Solved out-of-order webhook delivery and idempotency using Set + IF deduplication logic with a fallback error branch logging failed events for manual review — giving full resilience and auditability.</div>
-      <div class="project-impact">✓ Idempotent · Zero Double-Entries</div>
-      <div class="project-stack">
-        <span class="stack-tag">n8n</span>
-        <span class="stack-tag">Webhooks</span>
-        <span class="stack-tag">Payment Gateway</span>
-        <span class="stack-tag">Deduplication Logic</span>
-        <span class="stack-tag">Email Automation</span>
-        <span class="stack-tag">Fraud Alerts</span>
-      </div>
-    </div>
-    <div class="project-card reveal reveal-d4">
-      <div class="project-num">04</div>
-      <div class="project-title">Automated Onboarding Workflow</div>
-      <div class="project-desc">End-to-end onboarding automation using Power Automate & Power Apps, connecting HR systems to eliminate manual handoffs and reduce onboarding friction for new hires across multiple locations.</div>
+    <div class="project-card reveal reveal-d2">
+      <div class="project-num">06</div>
+      <div class="project-title">Automated HR Onboarding Workflow</div>
+      <div class="project-desc">End-to-end HR onboarding automation using Power Automate & Power Apps, connecting HR systems to eliminate manual handoffs and reduce onboarding friction for new hires across multiple locations.</div>
       <div class="project-impact">↑ 35% Productivity Gain</div>
       <div class="project-stack">
         <span class="stack-tag">Power Automate</span>
@@ -745,8 +872,8 @@
         <span class="stack-tag">SharePoint</span>
       </div>
     </div>
-    <div class="project-card reveal reveal-d1">
-      <div class="project-num">05</div>
+    <div class="project-card reveal reveal-d3">
+      <div class="project-num">07</div>
       <div class="project-title">Executive Cost-Saving Dashboard</div>
       <div class="project-desc">Built 100+ dynamic Power BI reports and Excel models for management decision-making, surfacing hidden cost inefficiencies across operational departments.</div>
       <div class="project-impact">↓ 28% Operational Costs</div>
@@ -757,8 +884,8 @@
         <span class="stack-tag">SQL</span>
       </div>
     </div>
-    <div class="project-card reveal reveal-d2">
-      <div class="project-num">06</div>
+    <div class="project-card reveal reveal-d4">
+      <div class="project-num">08</div>
       <div class="project-title">ML Training Data Pipeline</div>
       <div class="project-desc">Designed and executed a labeling pipeline for 10,000+ image and video datasets used in production ML model training, improving model accuracy by 22% through quality-controlled annotation workflows.</div>
       <div class="project-impact">↑ 22% Model Accuracy</div>
@@ -769,8 +896,8 @@
         <span class="stack-tag">Azure ML</span>
       </div>
     </div>
-    <div class="project-card reveal reveal-d3">
-      <div class="project-num">07</div>
+    <div class="project-card reveal reveal-d1">
+      <div class="project-num">09</div>
       <div class="project-title">AI Support Knowledge Base</div>
       <div class="project-desc">Structured and authored a 220+ FAQ knowledge base for a high-volume platform support team, integrated with ticketing systems to auto-suggest resolutions and reduce average handle time significantly.</div>
       <div class="project-impact">↓ 35% Resolution Time</div>
@@ -781,8 +908,8 @@
         <span class="stack-tag">Trello</span>
       </div>
     </div>
-    <div class="project-card reveal reveal-d4">
-      <div class="project-num">08</div>
+    <div class="project-card reveal reveal-d2">
+      <div class="project-num">10</div>
       <div class="project-title">Survey Analytics & Insights Engine</div>
       <div class="project-desc">Monthly analysis of new-hire experience surveys, translating qualitative and quantitative feedback into actionable process improvements that raised onboarding satisfaction scores by 30%.</div>
       <div class="project-impact">↑ 30% Satisfaction Improvement</div>
@@ -792,8 +919,8 @@
         <span class="stack-tag">Power BI</span>
       </div>
     </div>
-    <div class="project-card reveal reveal-d1">
-      <div class="project-num">09</div>
+    <div class="project-card reveal reveal-d3">
+      <div class="project-num">11</div>
       <div class="project-title">Multi-Site Training Coordination</div>
       <div class="project-desc">Coordinated and executed 12+ training programs for 500+ participants across 7 locations, achieving 90% satisfaction and 95% course completion through data-driven scheduling and feedback loops.</div>
       <div class="project-impact">95% Completion Rate</div>
